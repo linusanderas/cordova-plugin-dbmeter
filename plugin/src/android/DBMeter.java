@@ -113,6 +113,11 @@ public class DBMeter extends CordovaPlugin {
     public void start(final CallbackContext callbackContext) {
         final DBMeter that = this;
        Context context=this.cordova.getActivity().getApplicationContext();
+        AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
+        {
+            //aSource = MediaRecorder.AudioSource.UNPROCESSED;
+        }       
       
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
@@ -124,11 +129,7 @@ public class DBMeter extends CordovaPlugin {
                  
                   
                   
-                  AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-                  if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
-                  {
-                      aSource = MediaRecorder.AudioSource.UNPROCESSED;
-                  }                  
+                 
                   
                     that.audioRecord = new AudioRecord(
                             aSource,
