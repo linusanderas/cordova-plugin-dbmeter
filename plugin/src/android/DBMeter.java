@@ -30,6 +30,7 @@ public class DBMeter extends CordovaPlugin {
     private short[] buffer;
     private Timer timer;
     private boolean isListening = false;
+    private boolean isSupported = false;
 
 
     @Override
@@ -46,7 +47,7 @@ public class DBMeter extends CordovaPlugin {
             } else if (action.equals("isListening")) {
                 this.isListening(callbackContext);
             } else if (action.equals("isSupported")) {
-                this.isSuported(callbackContext);              
+                this.isSupported(callbackContext);              
             } else if (action.equals("destroy")) {
                 this.destroy(callbackContext);
             } else {
@@ -82,7 +83,7 @@ public class DBMeter extends CordovaPlugin {
      *
      * @param callbackContext The callback context used when calling back into JavaScript.
      */
-    public void isSuported(final CallbackContext callbackContext) {
+    public void isSupported(final CallbackContext callbackContext) {
       
       this.isSupported = false;
       
