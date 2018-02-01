@@ -7,6 +7,8 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
 
+import android.content.Context;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.LOG;
@@ -112,20 +114,23 @@ public class DBMeter extends CordovaPlugin {
                     that.isListening = false;
                     int rate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM);
                     int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-
+                    int aSource = MediaRecorder.AudioSource.VOICE_RECOGNITION
+                 
+                      AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                  if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
+                  {
+                      aSource = MediaRecorder.AudioSource.UNPROCESSED;
+                  }                  
+                  
                     that.audioRecord = new AudioRecord(
-                            MediaRecorder.AudioSource.VOICE_RECOGNITION,
+                            MediaRecorder.AudioSource.UNPROCESSED,
                             rate,
                             AudioFormat.CHANNEL_IN_MONO,
                             AudioFormat.ENCODING_PCM_16BIT,
                             bufferSize);
                   
                   
-                 AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-                if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
-                {
-                    that.audioRecord.setAudioSource(MediaRecorder.AudioSource.UNPROCESSED);
-                }
+
                   
                   
                   
