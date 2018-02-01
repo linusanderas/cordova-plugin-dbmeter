@@ -89,7 +89,7 @@ public class DBMeter extends CordovaPlugin {
       
       this.isSupported = false;
       
-       Context context=getApplicationContext();
+       Context context=this.cordova.getActivity().getApplicationContext();
       
       AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
       if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
@@ -118,7 +118,7 @@ public class DBMeter extends CordovaPlugin {
                     int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
                     int aSource = MediaRecorder.AudioSource.VOICE_RECOGNITION;
                  
-                   Context context=getApplicationContext();
+                   Context context=this.cordova.getActivity().getApplicationContext();
                   
                   AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
                   if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
