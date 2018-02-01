@@ -123,17 +123,11 @@ public class DBMeter extends CordovaPlugin {
                   }                  
                   
                     that.audioRecord = new AudioRecord(
-                            MediaRecorder.AudioSource.UNPROCESSED,
+                            aSource,
                             rate,
                             AudioFormat.CHANNEL_IN_MONO,
                             AudioFormat.ENCODING_PCM_16BIT,
                             bufferSize);
-                  
-                  
-
-                  
-                  
-                  
 
                     that.buffer = new short[bufferSize];
                 }
