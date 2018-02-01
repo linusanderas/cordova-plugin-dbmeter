@@ -45,6 +45,8 @@ public class DBMeter extends CordovaPlugin {
                 this.stop(callbackContext);
             } else if (action.equals("isListening")) {
                 this.isListening(callbackContext);
+            } else if (action.equals("isSupported")) {
+                this.isSuported(callbackContext);              
             } else if (action.equals("destroy")) {
                 this.destroy(callbackContext);
             } else {
@@ -76,6 +78,25 @@ public class DBMeter extends CordovaPlugin {
     }
 
     /**
+     * Returns whether the DBMeter is supporting UNPROCESSED sounds.
+     *
+     * @param callbackContext The callback context used when calling back into JavaScript.
+     */
+    public void isSuported(final CallbackContext callbackContext) {
+      
+      this.isSupported = false;
+      
+      AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+      if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
+      {
+           this.isSupported = true;
+      }      
+      
+        PluginResult result = new PluginResult(PluginResult.Status.OK, this.isSupported);
+        callbackContext.sendPluginResult(result);
+    }
+  
+    /**
      * Starts listening the audio signal and sends dB values as a
      * {@link org.apache.cordova.PluginResult PluginResult} using a
      * {@link java.util.TimerTask TimerTask}.
@@ -92,11 +113,21 @@ public class DBMeter extends CordovaPlugin {
                     int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
                     that.audioRecord = new AudioRecord(
-                            MediaRecorder.AudioSource.MIC,
+                            MediaRecorder.AudioSource.VOICE_RECOGNITION,
                             rate,
                             AudioFormat.CHANNEL_IN_MONO,
                             AudioFormat.ENCODING_PCM_16BIT,
                             bufferSize);
+                  
+                  
+                 AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
+                {
+                    that.audioRecord.setAudioSource(MediaRecorder.AudioSource.UNPROCESSED);
+                }
+                  
+                  
+                  
 
                     that.buffer = new short[bufferSize];
                 }
