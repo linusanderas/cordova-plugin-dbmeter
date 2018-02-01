@@ -9,11 +9,13 @@ import android.media.MediaRecorder;
 
 import android.content.Context;
 
+import org.apache.cordova.*;
+/*
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
-
+*/
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,6 +112,8 @@ public class DBMeter extends CordovaPlugin {
      */
     public void start(final CallbackContext callbackContext) {
         final DBMeter that = this;
+       Context context=this.cordova.getActivity().getApplicationContext();
+      
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
                 if (that.audioRecord == null) {
@@ -118,7 +122,7 @@ public class DBMeter extends CordovaPlugin {
                     int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
                     int aSource = MediaRecorder.AudioSource.VOICE_RECOGNITION;
                  
-                   Context context=this.cordova.getActivity().getApplicationContext();
+                  
                   
                   AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
                   if(audioManager.getProperty(AudioManager.PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED) !=null)
