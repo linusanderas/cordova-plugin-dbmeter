@@ -57,8 +57,7 @@ var DBMeter = {
       error,
       'DBMeter', 'isSupported', []
     );
-  }
-};
+  },
   
   /**
   * Returns whether the DBMeter is listening.
