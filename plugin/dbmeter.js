@@ -45,6 +45,21 @@ var DBMeter = {
     );
   },
 
+    /**
+  * Returns whether the DBMeter is supporting UNPROCESSED audio.
+  *
+  * @param  {success} callback in case of success
+  * @param  {error} callback in case of error
+  */
+  isSupported: function(success, error) {
+    cordova.exec(
+      success,
+      error,
+      'DBMeter', 'isSupported', []
+    );
+  }
+};
+  
   /**
   * Returns whether the DBMeter is listening.
   *
